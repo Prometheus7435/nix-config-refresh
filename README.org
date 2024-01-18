@@ -9,41 +9,76 @@ I'll start with one machine, which should be most of the work because shared res
 
 * Architecture
 I'm taking inspiration from [[https://github.com/Hoverbear-Consulting/flake/blob/root/flake.nix][hoverbear]] for the structure and will tailor it with my own stuff.
-Flake overall that'll specify the imports, ovrylays, and layout of the machine.
+Flake overall that'll specify the imports, ovrylays, and layout of the machine. The idea is that I have classes of devices that will contain everything that that class needs. So no seperating out every individual package and if only one machine needs something, that snowflake can exist in the machines config.
 
-- flake
-- config
-  - emacs
-  - fish
-  - neofetch.conf
-  - plasma KDE
-  - console
-  - git
-- machines
-  - akira
-    - disk
-    - default
-- services
-  - default
-  - containers
-    - different podman containers (once I figure them out)
-    - virtualization
-  - nfs
-    - server
-    - client
-  - nextcloud
-    - server
-    - client
-- traits
-  - workstation
-  - gaming
-  - mobile
-  - languages
-- users
-  - shyfox
-    - home-manager stuff
-  - starfleet
-    - home-manager stuff
+.
+├── flake.nix
+├── config/
+│   ├── emacs
+│   ├── fish
+│   ├── neofetch.conf
+│   ├── plasma KDE
+│   ├── console
+│   └── git
+├── machines/
+│   └── akira/
+│       ├── disk
+│       └── default
+├── services/
+│   ├── default
+│   ├── containers/
+│   │   ├── different podman containers (once I figure them out)
+│   │   └── virtualization
+│   ├── nfs/
+│   │   ├── server
+│   │   └── client
+│   └── nextcloud/
+│       ├── server
+│       └── client
+├── traits/
+│   ├── workstation
+│   ├── gaming
+│   ├── mobile
+│   └── languages
+└── users/
+    ├── shyfox/
+    │   └── home-manager stuff
+    └── starfleet/
+        └── home-manager stuff
+
+# - flake.nix
+# - config
+#   - emacs
+#   - fish
+#   - neofetch.conf
+#   - plasma KDE
+#   - console
+#   - git
+# - machines
+#   - akira
+#     - disk
+#     - default
+# - services
+#   - default
+#   - containers
+#     - different podman containers (once I figure them out)
+#     - virtualization
+#   - nfs
+#     - server
+#     - client
+#   - nextcloud
+#     - server
+#     - client
+# - traits
+#   - workstation
+#   - gaming
+#   - mobile
+#   - languages
+# - users
+#   - shyfox
+#     - home-manager stuff
+#   - starfleet
+#     - home-manager stuff
 
 * Starting Point
 I'm using my ThinkPad X1 tablet Gen 3 to start with. As this is the least used and more for playing with compared to my other machines.
