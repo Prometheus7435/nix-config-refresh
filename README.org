@@ -12,38 +12,38 @@ I'm taking inspiration from [[https://github.com/Hoverbear-Consulting/flake/blob
 Flake overall that'll specify the imports, ovrylays, and layout of the machine.
 
 - flake
-  - config
-    - emacs
-    - fish
-    - neofetch.conf
-    - plasma KDE
-    - console
-    - git
-  - machines
-    - akira
-      - disk
-      - default
-  - services
+- config
+  - emacs
+  - fish
+  - neofetch.conf
+  - plasma KDE
+  - console
+  - git
+- machines
+  - akira
+    - disk
     - default
-    - containers
-      - different podman containers (once I figure them out)
-      - virtualization
-    - nfs
-      - server
-      - client
-    - nextcloud
-      - server
-      - client
-  - traits
-    - workstation
-    - gaming
-    - mobile
-    - languages
-  - users
-    - shyfox
-      - home-manager stuff
-    - starfleet
-      - home-manager stuff
+- services
+  - default
+  - containers
+    - different podman containers (once I figure them out)
+    - virtualization
+  - nfs
+    - server
+    - client
+  - nextcloud
+    - server
+    - client
+- traits
+  - workstation
+  - gaming
+  - mobile
+  - languages
+- users
+  - shyfox
+    - home-manager stuff
+  - starfleet
+    - home-manager stuff
 
 * Starting Point
 I'm using my ThinkPad X1 tablet Gen 3 to start with. As this is the least used and more for playing with compared to my other machines.
