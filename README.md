@@ -1,14 +1,14 @@
-This repository is a rebase for my NixOS configs. I've found that [[https://github.com/wimpysworld/nix-config/tree/main][Wimpy's]] NixOS config was good to initially base and learn from. But my desires and preferences differ enough that it gets in the way more than helps. Hence this config.
+This repository is a rebase for my NixOS configs. I've found that [Wimpy's](https://github.com/wimpysworld/nix-config/tree/main) NixOS config was good to initially base and learn from. But my desires and preferences differ enough that it gets in the way more than helps. Hence this config.
 
 I'll start with one machine, which should be most of the work because shared resources are shared, and expand out.
 
-* Goals
+# Goals
 - I want to seperate the configurations into functional categories instead of pick and choose packages that I have right now. As there's really only a few variations that I would set up (workstation, mobile, server, vm, ...) I want something simpler.
 
 - Specifying the hardware to optimize performance per machine. I didn't know this before, but you can specify the gcc compiler to use more of the accelerators in the cpu (AVX bits). It has the possibility of greatly speeding up some tasks, but needs to be defined beforehand. Making it less than ideal for a generic configuration.
 
-* Architecture
-I'm taking inspiration from [[https://github.com/Hoverbear-Consulting/flake/blob/root/flake.nix][hoverbear]] for the structure and will tailor it with my own stuff.
+# Architecture
+I'm taking inspiration from [hoverbear](https://github.com/Hoverbear-Consulting/flake/blob/root/flake.nix) for the structure and will tailor it with my own stuff.
 Flake overall that'll specify the imports, ovrylays, and layout of the machine. The idea is that I have classes of devices that will contain everything that that class needs. So no seperating out every individual package and if only one machine needs something, that snowflake can exist in the machines config.
 
 .
@@ -46,39 +46,5 @@ Flake overall that'll specify the imports, ovrylays, and layout of the machine. 
     └── starfleet/
         └── home-manager stuff
 
-# - flake.nix
-# - config
-#   - emacs
-#   - fish
-#   - neofetch.conf
-#   - plasma KDE
-#   - console
-#   - git
-# - machines
-#   - akira
-#     - disk
-#     - default
-# - services
-#   - default
-#   - containers
-#     - different podman containers (once I figure them out)
-#     - virtualization
-#   - nfs
-#     - server
-#     - client
-#   - nextcloud
-#     - server
-#     - client
-# - traits
-#   - workstation
-#   - gaming
-#   - mobile
-#   - languages
-# - users
-#   - shyfox
-#     - home-manager stuff
-#   - starfleet
-#     - home-manager stuff
-
-* Starting Point
+# Starting Point
 I'm using my ThinkPad X1 tablet Gen 3 to start with. As this is the least used and more for playing with compared to my other machines.
