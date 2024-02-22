@@ -11,7 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # KDE Plasma
     plasma-manager = {
       url = "github:pjones/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,15 +24,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-software-center.url = "github:vlinkz/nix-software-center";
-
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
 
-    # NUR
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,123 +54,28 @@
       disko,
       nur,
       ...
-  }@inputs:
-    let
-      inherit (self) outputs;
-      # forAllSystems = nixpkgs.lib.genAttrs [
-      #   "aarch64-linux"
-      #   # "i686-linux"  # I don't have any 32 bit systems
-      #   # "x86_64-v3"
-      #   "x86_64-linux"
-      #   # "aarch64-darwin"  # no MacOS in this house
-      #   # "x86_64-darwin"  # no MacOS in this house
-      # ];
-      # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      stateVersion = "unstable";
-      # stateVersion = "23.05";
-
-    in rec {
-      # Your custom packages
-      # Acessible through 'nix build', 'nix shell', etc
-      # packages = forAllSystems (system:
-      #   let pkgs = nixpkgs.legacyPackages.${system};
-      #   in import ./pkgs { inherit pkgs; });
-      # # Devshell for bootstrapping
-      # # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      # devShells = forAllSystems (system:
-      #   let pkgs = nixpkgs.legacyPackages.${system};
-      #   in import ./shell.nix { inherit pkgs; });
-
-      # Your custom packages and modifications, exported as overlays
-      # overlays = import ./overlays { inherit inputs; };
-      # emacs-overlay = inputs.emacs-overlay.overlay;
-
-      # Reusable nixos modules you might want to export
-      # These are usually stuff you would upstream into nixpkgs
-      # nixosModules = import ./modules/nixos;
-
-      # Reusable home-manager modules you might want to export
-      # These are usually stuff you would upstream into home-manager
-      # homeManagerModules = import ./modules/home-manager;
+  }: {
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
-      nixosConfigurations = {
-        akira = nixpkgs.lib.nixosSystem {
-          # sudo nixos-rebuild switch --flake $HOME/Zero/nix-config
-          specialArgs = {
-            inherit inputs outputs stateVersion;
-            desktop = "kde";
-            hostid = "1a74de91"; # head -c 8 /etc/machine-id
-            hostname = "akira";
-            username = "shyfox";
-          };
-          modules = [
-            ./nixos
-            nur.nixosModules.nur
-          ];
+    nixosConfigurations = {
+      akira = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        gcc.arch = "znver2";
+        gcc.tune = "znver2";
+        specialArgs = {
+          inherit inputs outputs stateVersion;
+          desktop = "kde";
+          hostid = "1a74de91"; # head -c 8 /etc/machine-id
+          hostname = "akira";
+          username = "shyfox";
         };
-
-        starbase = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs stateVersion;
-            desktop = null;
-            hostid = "2accc22f"; # head -c 8 /etc/machine-id
-            hostname = "starbase";
-            username = "starfleet";
-          };
-          modules = [ ./nixos ];
-        };
-
-        # # FIXME replace with your hostname
-        # your-hostname = nixpkgs.lib.nixosSystem {
-        #   specialArgs = { inherit inputs outputs; };
-        #   modules = [
-        #     # > Our main nixos configuration file <
-        #     ./nixos/configuration.nix
-        #   ];
-        # };
-      };
-
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#your-username@your-hostname'
-      homeConfigurations = {
-        # home-manager switch -b backup --flake $HOME/Zero/nix-config
-        "shyfox@akira" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            desktop = "kde";
-            hostname = "akira";
-            username = "shyfox";
-          };
-          modules = [ ./home-manager
-                      inputs.plasma-manager.homeManagerModules.plasma-manager
-                      inputs.emacs-overlay
-                    ];
-        };
-
-        "starfleet@starbase" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            desktop = null;
-            hostname = "starbase";
-            username = "starfleet";
-          };
-          modules = [ ./home-manager ];
-        };
-
-
-        # # FIXME replace with your username@hostname
-        # "your-username@your-hostname" = home-manager.lib.homeManagerConfiguration {
-        #   pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        #   extraSpecialArgs = { inherit inputs outputs; };
-        #   modules = [
-        #     # > Our main home-manager configuration file <
-        #     ./home-manager/home.nix
-        #   ];
-        # };
+        stateVersion = "23.11";
+        modules = [
+          ./nixos
+          # nur.nixosModules.nur
+        ];
       };
     };
+  };
 }

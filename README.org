@@ -7,11 +7,14 @@ I'll start with one machine, which should be most of the work because shared res
 
 - Specifying the hardware to optimize performance per machine. I didn't know this before, but you can specify the gcc compiler to use more of the accelerators in the cpu (AVX bits). It has the possibility of greatly speeding up some tasks, but needs to be defined beforehand. Making it less than ideal for a generic configuration.
 
+* Why?
+Essentially, I was tired of looking this way and that to see what I had and where it was loaded. Simplifying the structure and having fewer files will make it easier to hold the whole contruct in my head.
+
 * Architecture
 I'm taking inspiration from [[https://github.com/Hoverbear-Consulting/flake/blob/root/flake.nix][hoverbear]] for the structure and will tailor it with my own stuff.
 Flake overall that'll specify the imports, ovrylays, and layout of the machine. The idea is that I have classes of devices that will contain everything that that class needs. So no seperating out every individual package and if only one machine needs something, that snowflake can exist in the machines config.
 
-#+begin_src ascii
+#+begin_src
 .
 ├── flake.nix
 ├── config/
@@ -47,40 +50,6 @@ Flake overall that'll specify the imports, ovrylays, and layout of the machine. 
     └── starfleet/
         └── home-manager stuff
 #+end_src
-
-# - flake.nix
-# - config
-#   - emacs
-#   - fish
-#   - neofetch.conf
-#   - plasma KDE
-#   - console
-#   - git
-# - machines
-#   - akira
-#     - disk
-#     - default
-# - services
-#   - default
-#   - containers
-#     - different podman containers (once I figure them out)
-#     - virtualization
-#   - nfs
-#     - server
-#     - client
-#   - nextcloud
-#     - server
-#     - client
-# - traits
-#   - workstation
-#   - gaming
-#   - mobile
-#   - languages
-# - users
-#   - shyfox
-#     - home-manager stuff
-#   - starfleet
-#     - home-manager stuff
 
 * Starting Point
 I'm using my ThinkPad X1 tablet Gen 3 to start with. As this is the least used and more for playing with compared to my other machines.
