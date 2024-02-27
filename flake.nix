@@ -34,14 +34,6 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # customize keyboard in Wayland
-    # xremap-flake = {
-    #   url = "github:xremap/nix-flake";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.home-manager.follows = "home-manager";
-    # };
-
   };
 
   outputs = {
@@ -54,28 +46,28 @@
       disko,
       nur,
       ...
-  }: {
-
-      # NixOS configuration entrypoint
-      # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      akira = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        gcc.arch = "znver2";
-        gcc.tune = "znver2";
-        specialArgs = {
-          inherit inputs outputs stateVersion;
-          desktop = "kde";
-          hostid = "1a74de91"; # head -c 8 /etc/machine-id
-          hostname = "akira";
-          username = "shyfox";
+  }:
+    let
+      # lib = nixpgs.lib;
+    in {
+      nixosConfigurations = {
+        akira = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs outputs stateVersion;
+            cpu-arch = "skylake";
+            desktop = "kde";
+            hostid = "1a74de91"; # head -c 8 /etc/machine-id
+            hostname = "akira";
+            username = "shyfox";
+          };
+          stateVersion = "unstable";
+          modules = [
+            ./machines
+            ./users
+            # nur.nixosModules.nur
+          ];
         };
-        stateVersion = "23.11";
-        modules = [
-          ./nixos
-          # nur.nixosModules.nur
-        ];
       };
     };
-  };
 }
